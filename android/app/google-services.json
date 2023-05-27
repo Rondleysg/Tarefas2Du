@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "598611378190",
+    "firebase_url": "https://tarefas2du-default-rtdb.firebaseio.com",
+    "project_id": "tarefas2du",
+    "storage_bucket": "tarefas2du.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598611378190:android:2ea5d186a0ce3f4d74bc5f",
+        "android_client_info": {
+          "package_name": "com.tarefa2dufirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598611378190-vmvd7urfjfk7vik4t6bbkirug3ep8pmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Voo0mM6e2RTPxjFzKGaGR1QTu1Bxo1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598611378190-vmvd7urfjfk7vik4t6bbkirug3ep8pmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
