@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
   Alert,
-  useWindowDimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -21,7 +20,6 @@ export function Login({navigation}: LoginProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
-  const window = useWindowDimensions();
 
   function clearFields() {
     setFieldEmail('');
@@ -71,46 +69,44 @@ export function Login({navigation}: LoginProps) {
           source={require('../../../assets/logo.png')}
         />
         <Image
-          style={styles.logopt2}
+          style={styles.logo2}
           resizeMode="stretch"
           source={require('../../../assets/logopt2.png')}
         />
         <Text style={styles.textDesc}>
           A melhor maneira de se manter organizado.
         </Text>
-        <View>
-          <Text nativeID="labelEmail">Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="E-mail"
-            placeholderTextColor="#dadada"
-            onChangeText={text => setFieldEmail(text)}
-            value={fieldEmail}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-          />
-        </View>
-        <View>
-          <Text nativeID="labelEmail">Senha</Text>
-          <TextInput
-            style={styles.input}
-            placeholderTextColor="#dadada"
-            secureTextEntry
-            placeholder="Senha"
-            onChangeText={text => setFieldPassword(text)}
-            value={fieldPassword}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-          />
-        </View>
-        <View style={(styles.footerContainer, {width: window.width})}>
-          <View style={styles.footerView}>
-            <Text style={styles.footerText}>
-              <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-                Sign up
-              </Text>
-            </Text>
+        <View style={styles.formContainer}>
+          <View>
+            <Text nativeID="labelEmail">Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="E-mail"
+              placeholderTextColor="#dadada"
+              onChangeText={text => setFieldEmail(text)}
+              value={fieldEmail}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
           </View>
+          <View>
+            <Text nativeID="labelSenha">Senha</Text>
+            <TextInput
+              style={styles.input}
+              placeholderTextColor="#dadada"
+              secureTextEntry
+              placeholder="Senha"
+              onChangeText={text => setFieldPassword(text)}
+              value={fieldPassword}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
+          </View>
+        </View>
+        <View style={styles.footerContainer}>
+          <Text onPress={onFooterLinkPress} style={styles.signupText}>
+            Sign up
+          </Text>
           <TouchableOpacity style={styles.button} onPress={() => userLogin()}>
             <Text style={styles.buttonTitle}>Log in</Text>
           </TouchableOpacity>

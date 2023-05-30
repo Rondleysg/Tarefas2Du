@@ -89,44 +89,53 @@ export function Signup({navigation}: SignupProps) {
           style={styles.logo}
           source={require('../../../assets/logo.png')}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Nome"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={text => setFieldName(text)}
-          value={fieldName}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
+        <Image
+          style={styles.logo2}
+          resizeMode="stretch"
+          source={require('../../../assets/logopt2.png')}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={text => setFieldEmail(text)}
-          value={fieldEmail}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Senha"
-          onChangeText={text => setFieldPassword(text)}
-          value={fieldPassword}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TouchableOpacity style={styles.button} onPress={() => registerUser()}>
-          <Text style={styles.buttonTitle}>Create account</Text>
-        </TouchableOpacity>
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Não possui uma conta?{' '}
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Log in
-            </Text>
+        <View style={styles.formContainer}>
+          <Text nativeID="labelNome">Nome</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nome"
+            placeholderTextColor="#aaaaaa"
+            onChangeText={text => setFieldName(text)}
+            value={fieldName}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+          />
+          <Text nativeID="labelEmail">Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            placeholderTextColor="#aaaaaa"
+            onChangeText={text => setFieldEmail(text)}
+            value={fieldEmail}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+          />
+          <Text nativeID="labelSenha">Senha</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#aaaaaa"
+            secureTextEntry
+            placeholder="Senha"
+            onChangeText={text => setFieldPassword(text)}
+            value={fieldPassword}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={styles.footerContainer}>
+          <Text onPress={onFooterLinkPress} style={styles.signupText}>
+            Ir para o login
           </Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => registerUser()}>
+            <Text style={styles.buttonTitle}>Registrar</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </View>

@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  logopt2: {
+  logo2: {
     height: 100,
     top: -1,
   },
@@ -28,17 +28,18 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
     paddingLeft: 16,
+    borderColor: 'black',
+    borderWidth: 1,
   },
   button: {
-    backgroundColor: '#788eec',
+    backgroundColor: '#5DB075',
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
     height: 48,
-    borderRadius: 5,
+    width: '50%',
+    borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -50,23 +51,24 @@ export default StyleSheet.create({
   footerContainer: {
     flex: 1,
     flexDirection: 'row',
-  },
-  footerView: {
-    flex: 1,
     alignItems: 'center',
-    marginTop: 20,
+    justifyContent: 'center',
+    marginHorizontal: 48,
+    marginLeft: 90,
+    marginBottom: 30,
   },
-  footerText: {
-    fontSize: 16,
-    color: '#2e2e2d',
-  },
-  footerLink: {
-    color: '#788eec',
+  signupText: {
+    color: '#979797',
     fontWeight: 'bold',
     fontSize: 16,
+    width: '50%',
   },
   keyboard: {
     flex: 1,
     width: '100%',
+  },
+  formContainer: {
+    marginHorizontal: 48,
+    marginTop: 20,
   },
 });

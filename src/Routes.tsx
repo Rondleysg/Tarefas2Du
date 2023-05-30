@@ -15,8 +15,10 @@ export function RootStack() {
         screenOptions={{
           headerStyle: {
             backgroundColor: '#4AC356',
-            height: 70,
+            height: 10,
           },
+          headerLeftLabelVisible: false,
+          headerLeftContainerStyle: {opacity: 0},
         }}>
         <Stack.Screen name="Signup" component={Signup} options={{title: ''}} />
         <Stack.Screen name="Login" component={Login} options={{title: ''}} />
