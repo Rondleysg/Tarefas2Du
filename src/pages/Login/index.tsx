@@ -10,7 +10,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import {NavigationProp} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
+import {auth, db} from '../../libs/firebase/config';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -31,12 +31,28 @@ export function Login({navigation}: LoginProps) {
       Alert.alert('Atenção', 'Todos os campos são obrigatórios.');
     } else {
       setIsLoading(true);
-      auth()
+      auth
         .signInWithEmailAndPassword(fieldEmail, fieldPassword)
-        .then(_res => {
-          clearFields();
-          setIsLoading(false);
-          navigation.navigate('Home');
+        .then(res => {
+          const uid = res.user.uid;
+          const usersRef = db.collection('users');
+          usersRef
+            .doc(uid)
+            .get()
+            .then(firestoreDocument => {
+              if (!firestoreDocument.exists) {
+                Alert.alert('Usuário não existe.');
+                return;
+              }
+              const user = firestoreDocument.data();
+              console.log(user);
+              clearFields();
+              setIsLoading(false);
+              navigation.navigate('Home', {user});
+            })
+            .catch(error => {
+              Alert.alert(error);
+            });
         })
         .catch(error => {
           setIsLoading(false);

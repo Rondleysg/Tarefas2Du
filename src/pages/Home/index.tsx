@@ -1,10 +1,15 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import {User} from '../../types/user';
 
-export function Home() {
+interface HomeProps {
+  user: User;
+}
+
+export function Home({user}: HomeProps) {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <Text>{user.name}</Text>
     </View>
   );
 }

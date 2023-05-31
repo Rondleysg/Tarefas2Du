@@ -10,7 +10,8 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import {NavigationProp} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
+import {auth, db} from '../../libs/firebase/config';
+import {User} from '../../types/user';
 
 interface SignupProps {
   navigation: NavigationProp<any, any>;
@@ -38,15 +39,27 @@ export function Signup({navigation}: SignupProps) {
     } else {
       setIsLoading(true);
 
-      auth()
+      auth
         .createUserWithEmailAndPassword(fieldEmail, fieldPassword)
         .then(res => {
-          res.user.updateProfile({
-            displayName: fieldName,
-          });
-          setIsLoading(false);
-          clearFields();
-          navigation.navigate('Login');
+          const uid = res.user.uid;
+          const data: User = {
+            id: uid,
+            email: fieldEmail,
+            name: fieldName,
+          };
+          const usersRef = db.collection('users');
+          usersRef
+            .doc(uid)
+            .set(data)
+            .then(() => {
+              setIsLoading(false);
+              clearFields();
+              navigation.navigate('Home', {user: data});
+            })
+            .catch(error => {
+              Alert.alert(error);
+            });
         })
         .catch(error => {
           setIsLoading(false);
