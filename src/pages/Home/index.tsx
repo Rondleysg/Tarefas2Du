@@ -5,11 +5,16 @@ import useUser from '../../hooks/useUser';
 interface HomeProps {}
 
 export function Home({}: HomeProps) {
-  const [user] = useUser();
+  const {user} = useUser();
   console.log(user);
+  if (!user) {
+    console.log('user not found');
+
+    return <></>;
+  }
   return (
     <View>
-      <Text>teste</Text>
+      <Text>{user.name}</Text>
     </View>
   );
 }

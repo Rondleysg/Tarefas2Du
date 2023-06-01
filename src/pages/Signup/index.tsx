@@ -23,7 +23,7 @@ export function Signup({navigation}: SignupProps) {
   const [fieldName, setFieldName] = useState('');
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
-  const [_user, setUser] = useUser();
+  const {setUser} = useUser();
 
   function clearFields() {
     setFieldName('');

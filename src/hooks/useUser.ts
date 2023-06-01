@@ -1,14 +1,7 @@
-import {useState} from 'react';
-import {User} from '../types/user';
+import {useContext} from 'react';
+import UserContext from '../context/User';
 
-const useUser = (): [User | undefined, (user: User) => void] => {
-  const [user, setUserState] = useState<User | undefined>(undefined);
-
-  const setUser = (newUser: User) => {
-    setUserState(newUser);
-  };
-
-  return [user, setUser];
-};
-
-export default useUser;
+export default function useUser() {
+  const {user, setUser} = useContext(UserContext);
+  return {user, setUser};
+}
