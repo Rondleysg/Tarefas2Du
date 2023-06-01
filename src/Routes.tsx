@@ -8,12 +8,13 @@ import {Home} from './pages/Home';
 import {useState, useEffect} from 'react';
 import {auth, db} from './libs/firebase/config';
 import {User} from './types/user';
+import useUser from './hooks/useUser';
 
 const Stack = createStackNavigator();
 
 export function RootStack() {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useUser();
 
   useEffect(() => {
     const usersRef = db.collection('users');
@@ -38,34 +39,46 @@ export function RootStack() {
         setLoading(false);
       }
     });
-  }, []);
+  }, [setUser]);
 
   if (loading) {
     return <></>;
   }
 
-  return user ? (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        children={() => <Home user={user} />}
-        options={{title: 'Home'}}
-      />
-    </Stack.Navigator>
-  ) : (
-    <Stack.Navigator initialRouteName="Signup">
-      <Stack.Group
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#4AC356',
-            height: 10,
-          },
-          headerLeftLabelVisible: false,
-          headerLeftContainerStyle: {opacity: 0},
-        }}>
-        <Stack.Screen name="Signup" component={Signup} options={{title: ''}} />
-        <Stack.Screen name="Login" component={Login} options={{title: ''}} />
-      </Stack.Group>
-    </Stack.Navigator>
+  return (
+    <>
+      {user ? (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{title: 'Home'}}
+          />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator initialRouteName="Signup">
+          <Stack.Group
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: '#4AC356',
+                height: 10,
+              },
+              headerLeftLabelVisible: false,
+              headerLeftContainerStyle: {opacity: 0},
+            }}>
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              options={{title: ''}}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{title: ''}}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      )}
+    </>
   );
 }

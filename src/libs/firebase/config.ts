@@ -1,24 +1,15 @@
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
-import {
-  apiKey,
-  authDomain,
-  databaseURL,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId,
-} from '../dotenv/config';
 
 const firebaseConfig = {
-  apiKey: apiKey,
-  authDomain: authDomain,
-  databaseURL: databaseURL,
-  projectId: projectId,
-  storageBucket: storageBucket,
-  messagingSenderId: messagingSenderId,
-  appId: appId,
+  apiKey: 'AIzaSyB9IPgmTnXdw0HyBbbaMJlTB7W67QCV1uk',
+  authDomain: 'tarefas2du.firebaseapp.com',
+  databaseURL: 'https://tarefas2du-default-rtdb.firebaseio.com',
+  projectId: 'tarefas2du',
+  storageBucket: 'tarefas2du.appspot.com',
+  messagingSenderId: '598611378190',
+  appId: '1:598611378190:web:717975b789a9d47874bc5f',
 };
 
 firebase.initializeApp(firebaseConfig);

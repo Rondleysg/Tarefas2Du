@@ -12,6 +12,7 @@ import styles from './styles';
 import {NavigationProp} from '@react-navigation/native';
 import {auth, db} from '../../libs/firebase/config';
 import {User} from '../../types/user';
+import useUser from '../../hooks/useUser';
 
 interface SignupProps {
   navigation: NavigationProp<any, any>;
@@ -22,6 +23,7 @@ export function Signup({navigation}: SignupProps) {
   const [fieldName, setFieldName] = useState('');
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
+  const [_user, setUser] = useUser();
 
   function clearFields() {
     setFieldName('');
@@ -43,7 +45,7 @@ export function Signup({navigation}: SignupProps) {
         .createUserWithEmailAndPassword(fieldEmail, fieldPassword)
         .then(res => {
           const uid = res.user.uid;
-          const data: User = {
+          const user: User = {
             id: uid,
             email: fieldEmail,
             name: fieldName,
@@ -51,11 +53,12 @@ export function Signup({navigation}: SignupProps) {
           const usersRef = db.collection('users');
           usersRef
             .doc(uid)
-            .set(data)
+            .set(user)
             .then(() => {
               setIsLoading(false);
               clearFields();
-              navigation.navigate('Home', {user: data});
+              setUser(user);
+              navigation.navigate('Home');
             })
             .catch(error => {
               Alert.alert(error);

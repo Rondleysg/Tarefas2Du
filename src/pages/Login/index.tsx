@@ -11,6 +11,8 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import {NavigationProp} from '@react-navigation/native';
 import {auth, db} from '../../libs/firebase/config';
+import {User} from '../../types/user';
+import useUser from '../../hooks/useUser';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -20,6 +22,7 @@ export function Login({navigation}: LoginProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
+  const [_user, setUser] = useUser();
 
   function clearFields() {
     setFieldEmail('');
@@ -44,11 +47,11 @@ export function Login({navigation}: LoginProps) {
                 Alert.alert('Usuário não existe.');
                 return;
               }
-              const user = firestoreDocument.data();
-              console.log(user);
+              const user: User = firestoreDocument.data() as User;
+              setUser(user);
               clearFields();
               setIsLoading(false);
-              navigation.navigate('Home', {user});
+              navigation.navigate('Home');
             })
             .catch(error => {
               Alert.alert(error);
