@@ -72,6 +72,9 @@ export default function MyDay({navigation}: MyDayProps) {
         <FlatList
           data={tasksToday.sort((a, b) => {
             if (a.completeDate && b.completeDate) {
+              if (a.completeDate === b.completeDate) {
+                return 0;
+              }
               return a.completeDate < b.completeDate ? -1 : 1;
             }
             return 0;
