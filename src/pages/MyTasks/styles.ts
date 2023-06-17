@@ -16,10 +16,11 @@ export default StyleSheet.create({
   subTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 40,
     textTransform: 'uppercase',
     alignSelf: 'flex-start',
     color: '#4AC356',
+    marginBottom: 10,
   },
   containerTasks: {
     flex: 1,

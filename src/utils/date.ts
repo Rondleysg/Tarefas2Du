@@ -9,10 +9,7 @@ export const getCurrentDate = () => {
   return date + '/' + month + '/' + year + '-' + hours + ':' + minutes; //format: dd/mm/yy-hh:mm;
 };
 
-export const getCurrentHoursAndMinutesFormated = (
-  hours: number,
-  minutes: number,
-) => {
+export const getHoursAndMinutesFormated = (hours: number, minutes: number) => {
   return (
     hours.toString().padStart(2, '0') +
     ':' +

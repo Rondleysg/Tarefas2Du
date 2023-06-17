@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 5,
   },
   containerTask: {
     flex: 1,
@@ -18,23 +19,15 @@ export default StyleSheet.create({
   },
   containerText: {
     marginLeft: 30,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '70%',
+    justifyContent: 'space-between',
   },
   descItem: {
     fontSize: 18,
     color: '#000000',
-  },
-  hoursItem: {
-    fontSize: 14,
-  },
-  taskHoursOk: {
-    color: '#4AC356',
-  },
-  taskHoursAlert: {
-    color: '#FFC107',
-  },
-  taskHoursProblem: {
-    color: '#FF0000',
+    width: '70%',
   },
   completedTask: {
     textDecorationLine: 'line-through',

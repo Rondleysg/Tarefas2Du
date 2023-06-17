@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View, useWindowDimensions} from 'react-native';
 import styles from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Task} from '../../types/task';
+import {getHoursAndMinutesFormated} from '../../utils/date';
 
 interface TaskItemLimitedProps {
   onPress: () => void;
@@ -39,6 +40,9 @@ export default function TaskItemLimited({
               taskItem.completed ? styles.completedTask : {},
             ]}>
             {taskItem.description}
+          </Text>
+          <Text>
+            {getHoursAndMinutesFormated(taskItem.hours, taskItem.minutes)}
           </Text>
         </View>
       </View>

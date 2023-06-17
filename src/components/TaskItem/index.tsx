@@ -4,10 +4,7 @@ import styles from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Task, TaskHoursState} from '../../types/task';
 import {useEffect, useState} from 'react';
-import {
-  getCurrentHoursAndMinutesFormated,
-  getHoursState,
-} from '../../utils/date';
+import {getHoursAndMinutesFormated, getHoursState} from '../../utils/date';
 
 interface TaskItemProps {
   onPress: () => void;
@@ -60,10 +57,7 @@ export default function TaskItem({onPress, taskItem}: TaskItemProps) {
               styles[hoursState],
               taskItem.completed ? styles.completedTask : {},
             ]}>
-            {getCurrentHoursAndMinutesFormated(
-              taskItem.hours,
-              taskItem.minutes,
-            )}
+            {getHoursAndMinutesFormated(taskItem.hours, taskItem.minutes)}
           </Text>
         </View>
       </View>
