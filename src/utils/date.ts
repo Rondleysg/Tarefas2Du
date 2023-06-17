@@ -74,3 +74,12 @@ export const getFullDateNormalized = (date: Date) => {
   const minutes = date.getMinutes().toString().padStart(2, '0');
   return date.toLocaleDateString() + ' ' + hours + ':' + minutes; //format: dd/mm/yy hh:mm;
 };
+
+export const getWeekNumber = (date: Date) => {
+  const year = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor(
+    (date.getTime() - year.getTime()) / (24 * 60 * 60 * 1000),
+  );
+  const week = Math.ceil((date.getDay() + 1 + days) / 7);
+  return week;
+};

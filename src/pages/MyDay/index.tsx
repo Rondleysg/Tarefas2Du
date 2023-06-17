@@ -75,7 +75,7 @@ export default function MyDay({navigation}: MyDayProps) {
               if (a.completeDate === b.completeDate) {
                 return 0;
               }
-              return a.completeDate < b.completeDate ? -1 : 1;
+              return a.completeDate < b.completeDate ? 1 : -1;
             }
             return 0;
           })}
