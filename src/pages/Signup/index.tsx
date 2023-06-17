@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {
   Image,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Alert,
+  useWindowDimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -13,6 +13,7 @@ import {NavigationProp} from '@react-navigation/native';
 import {auth, db} from '../../libs/firebase/config';
 import {User} from '../../types/user';
 import useUser from '../../hooks/useUser';
+import TextInputComponent from '../../components/TextInput';
 
 interface SignupProps {
   navigation: NavigationProp<any, any>;
@@ -24,6 +25,7 @@ export function Signup({navigation}: SignupProps) {
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
   const {setUser} = useUser();
+  const window = useWindowDimensions();
 
   function clearFields() {
     setFieldName('');
@@ -110,40 +112,35 @@ export function Signup({navigation}: SignupProps) {
           resizeMode="stretch"
           source={require('../../../assets/logopt2.png')}
         />
+        <Text style={styles.title}>Criar uma conta</Text>
         <View style={styles.formContainer}>
-          <Text nativeID="labelNome">Nome</Text>
-          <TextInput
-            style={styles.input}
+          <TextInputComponent
+            textLabel="Nome"
+            stylesProps={styles.input}
             placeholder="Nome"
-            placeholderTextColor="#aaaaaa"
             onChangeText={text => setFieldName(text)}
-            value={fieldName}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
+            valueField={fieldName}
+            iconName="account"
           />
-          <Text nativeID="labelEmail">Email</Text>
-          <TextInput
-            style={styles.input}
+          <TextInputComponent
+            textLabel="Email"
+            stylesProps={styles.input}
             placeholder="E-mail"
-            placeholderTextColor="#aaaaaa"
             onChangeText={text => setFieldEmail(text)}
-            value={fieldEmail}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
+            valueField={fieldEmail}
+            iconName="email"
           />
-          <Text nativeID="labelSenha">Senha</Text>
-          <TextInput
-            style={styles.input}
-            placeholderTextColor="#aaaaaa"
-            secureTextEntry
+          <TextInputComponent
+            textLabel="Senha"
+            stylesProps={styles.input}
             placeholder="Senha"
+            secureTextEntry={true}
             onChangeText={text => setFieldPassword(text)}
-            value={fieldPassword}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
+            valueField={fieldPassword}
+            iconName="lock"
           />
         </View>
-        <View style={styles.footerContainer}>
+        <View style={[styles.footerContainer, {marginTop: window.height / 18}]}>
           <Text onPress={onFooterLinkPress} style={styles.signupText}>
             Ir para o login
           </Text>

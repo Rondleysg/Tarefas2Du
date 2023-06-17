@@ -16,7 +16,7 @@ export default StyleSheet.create({
   subTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 34,
+    marginTop: 20,
     textTransform: 'uppercase',
     alignSelf: 'flex-start',
     color: '#4AC356',
