@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {
   Image,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Alert,
+  useWindowDimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -13,6 +13,7 @@ import {NavigationProp} from '@react-navigation/native';
 import {auth, db} from '../../libs/firebase/config';
 import {User} from '../../types/user';
 import useUser from '../../hooks/useUser';
+import TextInputComponent from '../../components/TextInput';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -23,6 +24,7 @@ export function Login({navigation}: LoginProps) {
   const [fieldEmail, setFieldEmail] = useState('');
   const [fieldPassword, setFieldPassword] = useState('');
   const {setUser} = useUser();
+  const window = useWindowDimensions();
 
   function clearFields() {
     setFieldEmail('');
@@ -92,42 +94,35 @@ export function Login({navigation}: LoginProps) {
           resizeMode="stretch"
           source={require('../../../assets/logopt2.png')}
         />
+        <Text style={styles.title}>Fazer Login</Text>
         <Text style={styles.textDesc}>
           A melhor maneira de se manter organizado.
         </Text>
         <View style={styles.formContainer}>
-          <View>
-            <Text nativeID="labelEmail">Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="E-mail"
-              placeholderTextColor="#dadada"
-              onChangeText={text => setFieldEmail(text)}
-              value={fieldEmail}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
-          </View>
-          <View>
-            <Text nativeID="labelSenha">Senha</Text>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor="#dadada"
-              secureTextEntry
-              placeholder="Senha"
-              onChangeText={text => setFieldPassword(text)}
-              value={fieldPassword}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
-          </View>
+          <TextInputComponent
+            textLabel="Email"
+            stylesProps={styles.input}
+            placeholder="E-mail"
+            onChangeText={text => setFieldEmail(text)}
+            valueField={fieldEmail}
+            iconName="email"
+          />
+          <TextInputComponent
+            textLabel="Senha"
+            stylesProps={styles.input}
+            placeholder="Senha"
+            onChangeText={text => setFieldPassword(text)}
+            valueField={fieldPassword}
+            iconName="lock"
+            secureTextEntry
+          />
         </View>
-        <View style={styles.footerContainer}>
+        <View style={[styles.footerContainer, {marginTop: window.height / 8}]}>
           <Text onPress={onFooterLinkPress} style={styles.signupText}>
-            Sign up
+            Ir para o registro
           </Text>
           <TouchableOpacity style={styles.button} onPress={() => userLogin()}>
-            <Text style={styles.buttonTitle}>Log in</Text>
+            <Text style={styles.buttonTitle}>Login</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>

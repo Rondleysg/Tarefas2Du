@@ -6,31 +6,34 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  title: {},
-  logo: {
-    height: 250,
-    width: '100%',
+  title: {
+    marginTop: 15,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#5DB075',
     alignSelf: 'center',
   },
+  logo: {
+    resizeMode: 'contain',
+    height: 200,
+    width: '100%',
+    alignSelf: 'center',
+    backgroundColor: '#4BCD57',
+  },
   logo2: {
-    height: 100,
+    height: 50,
     top: -1,
   },
   textDesc: {
     textAlign: 'center',
     marginTop: 22,
-    marginBottom: 12,
   },
   input: {
     height: 48,
-    borderRadius: 5,
     overflow: 'hidden',
     backgroundColor: 'white',
-    marginTop: 10,
+    marginTop: 25,
     marginBottom: 10,
-    paddingLeft: 16,
-    borderColor: 'black',
-    borderWidth: 1,
   },
   button: {
     backgroundColor: '#5DB075',
@@ -51,11 +54,10 @@ export default StyleSheet.create({
   footerContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 48,
     marginLeft: 90,
-    marginBottom: 30,
+    alignItems: 'baseline',
   },
   signupText: {
     color: '#979797',
