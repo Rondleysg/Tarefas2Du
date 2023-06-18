@@ -36,12 +36,6 @@ export default StyleSheet.create({
     height: 70,
     marginTop: 5,
   },
-  line: {
-    borderBottomColor: 'gray',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    width: '100%',
-    marginBottom: 25,
-  },
   quantityTasks: {
     fontSize: 14,
     fontWeight: 'bold',

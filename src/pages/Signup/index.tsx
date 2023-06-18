@@ -51,6 +51,8 @@ export function Signup({navigation}: SignupProps) {
             id: uid,
             email: fieldEmail,
             name: fieldName,
+            photoUrl:
+              'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-Pic.png',
           };
           const usersRef = db.collection('users');
           usersRef

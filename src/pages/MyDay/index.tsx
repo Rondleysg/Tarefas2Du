@@ -12,6 +12,7 @@ import FabButton from '../../components/FabButton';
 import {Task} from '../../types/task';
 import {SheetManager} from 'react-native-actions-sheet';
 import {db} from '../../libs/firebase/config';
+import {Line} from '../../components/Line';
 
 interface MyDayProps {
   navigation: NavigationProp<any, any>;
@@ -83,7 +84,7 @@ export default function MyDay({navigation}: MyDayProps) {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.task}>
-              <View style={styles.line} />
+              <Line />
               <TaskItem taskItem={item} onPress={() => handleCheckTask(item)} />
             </View>
           )}
