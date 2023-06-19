@@ -32,7 +32,7 @@ export default StyleSheet.create({
     borderWidth: 2,
     borderRadius: 40,
   },
-  btnText: {
+  btnEdit: {
     color: '#a9a9a9',
     fontSize: 14,
     alignSelf: 'center',
@@ -43,6 +43,12 @@ export default StyleSheet.create({
     width: '100%',
     marginRight: 20,
     marginTop: 10,
+  },
+  containersContent: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '65%',
   },
   flexField: {
     flexDirection: 'row',
@@ -57,5 +63,28 @@ export default StyleSheet.create({
   email: {
     fontSize: 16,
     color: '#a9a9a9',
+  },
+  containerStatistics: {
+    marginTop: 20,
+    width: '100%',
+  },
+  textStatistics: {
+    fontSize: 16,
+    color: '#a9a9a9',
+    textTransform: 'uppercase',
+    marginLeft: 25,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  line: {
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  btnText: {
+    color: '#4BCD57',
+    fontSize: 18,
+  },
+  containerButtons: {
+    width: '100%',
   },
 });

@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import useUser from '../../hooks/useUser';
 import useTasks from '../../hooks/useTasks';
-import {NavigationProp} from '@react-navigation/native';
 import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import {getCurrentDayText} from '../../utils/date';
@@ -13,19 +12,18 @@ import {Task} from '../../types/task';
 import {SheetManager} from 'react-native-actions-sheet';
 import {db} from '../../libs/firebase/config';
 import {Line} from '../../components/Line';
+import RNRestart from 'react-native-restart';
 
-interface MyDayProps {
-  navigation: NavigationProp<any, any>;
-}
+interface MyDayProps {}
 
-export default function MyDay({navigation}: MyDayProps) {
+export default function MyDay({}: MyDayProps) {
   const {user} = useUser();
   const [day, _setDay] = useState(getCurrentDayText());
   const {tasks, setTasks} = useTasks();
   const [tasksToday, setTasksToday] = useState<Task[]>([]);
 
   if (!user) {
-    navigation.navigate('Login');
+    RNRestart.restart();
     return <></>;
   }
 
@@ -84,7 +82,7 @@ export default function MyDay({navigation}: MyDayProps) {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.task}>
-              <Line />
+              <Line style={styles.line} />
               <TaskItem taskItem={item} onPress={() => handleCheckTask(item)} />
             </View>
           )}

@@ -36,6 +36,9 @@ export default StyleSheet.create({
     height: 70,
     marginTop: 5,
   },
+  line: {
+    marginBottom: 25,
+  },
   quantityTasks: {
     fontSize: 14,
     fontWeight: 'bold',

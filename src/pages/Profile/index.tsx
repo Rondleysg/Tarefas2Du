@@ -1,22 +1,20 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import useUser from '../../hooks/useUser';
-import {NavigationProp} from '@react-navigation/native';
 import styles from './styles';
 import {Button} from 'react-native-paper';
 import {auth} from '../../libs/firebase/config';
 import RNRestart from 'react-native-restart';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Line} from '../../components/Line';
+import CardStatistics from '../../components/CardStatistics';
 
-interface ProfileProps {
-  navigation: NavigationProp<any, any>;
-}
+interface ProfileProps {}
 
-export default function Profile({navigation}: ProfileProps) {
+export default function Profile({}: ProfileProps) {
   const {user} = useUser();
   if (!user) {
-    navigation.navigate('Login');
+    RNRestart.restart();
     return <></>;
   }
 
@@ -27,7 +25,7 @@ export default function Profile({navigation}: ProfileProps) {
         <View style={styles.containerImage}>
           <Image style={styles.image} source={{uri: user.photoUrl}} />
           <Button disabled>
-            <Text style={styles.btnText}>Editar</Text>
+            <Text style={styles.btnEdit}>Editar</Text>
           </Button>
         </View>
         <View style={styles.containerFields}>
@@ -51,16 +49,26 @@ export default function Profile({navigation}: ProfileProps) {
           </View>
         </View>
       </View>
-      <Line />
-      <Text>Teste</Text>
-      <Button
-        onPress={() => {
-          auth.signOut().then(() => {
-            RNRestart.restart();
-          });
-        }}>
-        Sair
-      </Button>
+      <View style={styles.containersContent}>
+        <View style={styles.containerStatistics}>
+          <CardStatistics text="Quantidade de Tarefas Criadas:" value="0" />
+          <CardStatistics text="Quantidade de Tarefas Finalizadas:" value="0" />
+          <CardStatistics text="Quantidade de Tarefas Pendentes:" value="0" />
+          <Line style={styles.line} />
+        </View>
+        <View style={styles.containerButtons}>
+          <Line style={styles.line} />
+          <Button
+            onPress={() => {
+              auth.signOut().then(() => {
+                RNRestart.restart();
+              });
+            }}>
+            <Text style={styles.btnText}>Sair</Text>
+          </Button>
+          <Line style={styles.line} />
+        </View>
+      </View>
     </View>
   );
 }

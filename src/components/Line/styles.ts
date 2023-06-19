@@ -5,6 +5,5 @@ export default StyleSheet.create({
     borderBottomColor: 'gray',
     borderBottomWidth: StyleSheet.hairlineWidth,
     width: '100%',
-    marginBottom: 25,
   },
 });
