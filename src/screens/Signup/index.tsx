@@ -1,3 +1,4 @@
+// ** React Imports
 import React, {useState} from 'react';
 import {
   Image,
@@ -8,12 +9,21 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Navigate Imports
 import {NavigationProp} from '@react-navigation/native';
-import {auth, db} from '../../libs/firebase/config';
-import {User} from '../../types/user';
+
+// ** Hooks Imports
 import useUser from '../../hooks/useUser';
+
+// ** Components Imports
 import TextInputComponent from '../../components/TextInput';
+
+// ** Services Imports
+import {UserService} from '../../services/UserService';
 
 interface SignupProps {
   navigation: NavigationProp<any, any>;
@@ -37,62 +47,25 @@ export function Signup({navigation}: SignupProps) {
     navigation.navigate('Login');
   };
 
-  function registerUser() {
+  async function registerUser() {
     if (fieldName === '' || fieldEmail === '' || fieldPassword === '') {
       Alert.alert('Atenção', 'Todos os campos são obrigatórios.');
     } else {
       setIsLoading(true);
+      const res = await UserService.createUser(
+        fieldName,
+        fieldEmail,
+        fieldPassword,
+      );
+      if (typeof res === 'string') {
+        Alert.alert('Atenção', res);
+        return;
+      }
 
-      auth
-        .createUserWithEmailAndPassword(fieldEmail, fieldPassword)
-        .then(res => {
-          const uid = res.user.uid;
-          const user: User = {
-            id: uid,
-            email: fieldEmail,
-            name: fieldName,
-            photoUrl:
-              'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-Pic.png',
-          };
-          const usersRef = db.collection('users');
-          usersRef
-            .doc(uid)
-            .set(user)
-            .then(() => {
-              setIsLoading(false);
-              clearFields();
-              setUser(user);
-              navigation.navigate('Home');
-            })
-            .catch(error => {
-              Alert.alert(error);
-            });
-        })
-        .catch(error => {
-          setIsLoading(false);
-          if (error.code === 'auth/email-already-in-use') {
-            Alert.alert('Atenção', 'Este e-mail já está em uso.');
-            return;
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            Alert.alert('Atenção', 'Este e-mail está inválido.');
-            return;
-          }
-
-          if (error.code === 'auth/weak-password') {
-            Alert.alert(
-              'Atenção',
-              'Sua senha precisa possuir no mínimo 6 caracteres.',
-            );
-            return;
-          }
-
-          Alert.alert(
-            'Atenção',
-            'Um erro não mapeado aconteceu, verifique sua contexão com a internet ou altere seus dados de cadastro.',
-          );
-        });
+      setIsLoading(false);
+      clearFields();
+      setUser(res);
+      navigation.navigate('Home');
     }
   }
 

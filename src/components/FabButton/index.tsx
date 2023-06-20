@@ -1,11 +1,14 @@
+// ** React Imports
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   useWindowDimensions,
 } from 'react-native';
+
+// ** Icons Imports
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface FabButtonProps {
   onClick: () => void;

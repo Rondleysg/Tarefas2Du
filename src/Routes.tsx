@@ -1,13 +1,15 @@
-//React
+// ** React Imports
 import React from 'react';
+
+// ** Navigate Imports
 import {createStackNavigator} from '@react-navigation/stack';
 
-//Pages
-import {Login} from './pages/Login';
-import {Signup} from './pages/Signup';
-import AppTabRoutes from './pages/AppTabRoutes';
+// ** Screens Imports
+import {Login} from './screens/Login';
+import {Signup} from './screens/Signup';
+import AppTabRoutes from './screens/AppTabRoutes';
 
-//Hooks
+// ** Hooks Imports
 import useUser from './hooks/useUser';
 
 const Stack = createStackNavigator();

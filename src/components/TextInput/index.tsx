@@ -1,5 +1,10 @@
+// ** React Imports
 import React from 'react';
+
+// ** Components Imports
 import {TextInput} from 'react-native-paper';
+
+// ** Styles Imports
 import styles from './styles';
 
 interface TextInputComponentProps {

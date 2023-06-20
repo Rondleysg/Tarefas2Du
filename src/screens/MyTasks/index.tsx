@@ -1,11 +1,21 @@
-import React, {useEffect, useState} from 'react';
+// ** React Imports
+import React, {useCallback, useEffect, useState} from 'react';
 import {SectionList, Text, View} from 'react-native';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Types Imports
 import {Task} from '../../types/task';
-import {db} from '../../libs/firebase/config';
+
+// ** Hooks Imports
 import useTasks from '../../hooks/useTasks';
+
+// ** Components Imports
 import TaskItemLimited from '../../components/TaskItemLimited';
-import {getWeekNumber} from '../../utils/date';
+
+// ** Services Imports
+import {TaskService} from '../../services/TaskService';
 
 export default function MyTasks() {
   const {tasks, setTasks} = useTasks();
@@ -13,77 +23,44 @@ export default function MyTasks() {
   const [tasksTomorrow, setTasksTomorrow] = useState<Task[]>([]);
   const [tasksNextWeek, setTasksNextWeek] = useState<Task[]>([]);
   const [tasksSomeday, setTasksSomeday] = useState<Task[]>([]);
-  const dateToday = new Date();
 
   const handleCheckTask = async (task: Task) => {
-    const tasksRef = db.collection('tasks');
-    tasksRef
-      .doc(task.id)
-      .update({
-        completed: !task.completed,
-      })
-      .then(() => {
-        const tasksAux = tasks.map(taskAux => {
-          if (taskAux.id === task.id) {
-            taskAux.completed = !taskAux.completed;
-          }
-          return taskAux;
-        });
-        setTasks(tasksAux);
-      });
+    TaskService.markTaskAsCompleted(task);
+    const tasksAux = tasks.map(taskAux => {
+      if (taskAux.id === task.id) {
+        taskAux.completed = !taskAux.completed;
+      }
+      return taskAux;
+    });
+    setTasks(tasksAux);
   };
 
-  const getTasksToday = () => {
-    setTasksToday(
-      tasks.filter(
-        task =>
-          task.day === dateToday.getDate() &&
-          task.month === dateToday.getMonth() &&
-          task.year === dateToday.getFullYear(),
-      ),
-    );
-  };
+  const getTasksToday = useCallback(async () => {
+    const tasksTodayAux = await TaskService.getTasksToday(tasks);
+    setTasksToday(tasksTodayAux);
+  }, [tasks]);
 
-  const getTasksTomorrow = () => {
-    setTasksTomorrow(
-      tasks.filter(
-        task =>
-          task.day === dateToday.getDate() + 1 &&
-          task.month === dateToday.getMonth() &&
-          task.year === dateToday.getFullYear(),
-      ),
-    );
-  };
+  const getTasksTomorrow = useCallback(async () => {
+    const tasksTomorrowAux = await TaskService.getTasksTomorrow(tasks);
+    setTasksTomorrow(tasksTomorrowAux);
+  }, [tasks]);
 
-  const getTasksNextWeek = () => {
-    const currentWeek = getWeekNumber(dateToday);
-    setTasksNextWeek(
-      tasks.filter(task => {
-        const taskWeek = getWeekNumber(new Date(task.completeDate * 1000));
-        if (taskWeek === currentWeek + 1) {
-          return task;
-        }
-      }),
-    );
-  };
+  const getTasksNextWeek = useCallback(async () => {
+    const tasksNextWeekAux = await TaskService.getTasksNextWeek(tasks);
+    setTasksNextWeek(tasksNextWeekAux);
+  }, [tasks]);
 
-  const getTasksSomeday = () => {
-    setTasksSomeday(
-      tasks.filter(
-        task =>
-          task.month >= dateToday.getMonth() + 1 &&
-          task.year >= dateToday.getFullYear(),
-      ),
-    );
-  };
+  const getTasksSomeday = useCallback(async () => {
+    const tasksSomedayAux = await TaskService.getTasksSomeday(tasks);
+    setTasksSomeday(tasksSomedayAux);
+  }, [tasks]);
 
   useEffect(() => {
     getTasksToday();
     getTasksTomorrow();
     getTasksNextWeek();
     getTasksSomeday();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getTasksToday, getTasksTomorrow, getTasksNextWeek, getTasksSomeday]);
 
   return (
     <View style={styles.containerMain}>

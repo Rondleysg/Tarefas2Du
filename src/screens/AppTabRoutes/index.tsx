@@ -1,11 +1,17 @@
-/* eslint-disable react/no-unstable-nested-components */
+// ** React Imports
 import React from 'react';
+import {Text} from 'react-native';
+
+// ** Navigate Imports
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+// ** Icons Imports
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// ** Screens Imports
 import MyDay from '../MyDay';
 import Profile from '../Profile';
 import MyTasks from '../MyTasks';
-import {Text} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 

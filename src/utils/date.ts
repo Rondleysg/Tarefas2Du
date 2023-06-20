@@ -1,3 +1,4 @@
+// ** Types Imports
 import {Task, TaskHoursState} from '../types/task';
 
 export const getCurrentDate = () => {
@@ -6,7 +7,7 @@ export const getCurrentDate = () => {
   const year = new Date().getFullYear();
   const hours = new Date().getHours();
   const minutes = new Date().getMinutes();
-  return date + '/' + month + '/' + year + '-' + hours + ':' + minutes; //format: dd/mm/yy-hh:mm;
+  return date + '/' + month + '/' + year + '-' + hours + ':' + minutes; // *format: dd/mm/yy-hh:mm;
 };
 
 export const getHoursAndMinutesFormated = (hours: number, minutes: number) => {
@@ -14,26 +15,17 @@ export const getHoursAndMinutesFormated = (hours: number, minutes: number) => {
     hours.toString().padStart(2, '0') +
     ':' +
     minutes.toString().padStart(2, '0')
-  ); //format: hh:mm;
+  ); // *format: hh:mm;
 };
 
 export const getCurrentDay = () => {
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
-  return date + '/' + month + '/' + year; //format: dd/mm/yy;
+  return date + '/' + month + '/' + year; // *format: dd/mm/yy;
 };
 
 export const getCurrentDayText = () => {
-  //   const dayName = [
-  //     'domingo',
-  //     'segunda',
-  //     'terça',
-  //     'quarta',
-  //     'quinta',
-  //     'sexta',
-  //     'sábado',
-  //   ];
   const monName = [
     'janeiro',
     'fevereiro',
@@ -50,7 +42,7 @@ export const getCurrentDayText = () => {
   const date = new Date().getDate();
   const month = new Date().getMonth();
 
-  return date + ' de ' + monName[month]; //format: dd de mês
+  return date + ' de ' + monName[month]; // *format: dd de mês
 };
 
 export const getHoursState = (task: Task): TaskHoursState => {
@@ -69,7 +61,7 @@ export const getHoursState = (task: Task): TaskHoursState => {
 export const getFullDateNormalized = (date: Date) => {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
-  return date.toLocaleDateString() + ' ' + hours + ':' + minutes; //format: dd/mm/yy hh:mm;
+  return date.toLocaleDateString() + ' ' + hours + ':' + minutes; // *format: dd/mm/yy hh:mm;
 };
 
 export const getWeekNumber = (date: Date) => {

@@ -1,9 +1,17 @@
-import React from 'react';
+// ** React Imports
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View, useWindowDimensions} from 'react-native';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Icons Imports
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// ** Types Imports
 import {Task, TaskHoursState} from '../../types/task';
-import {useEffect, useState} from 'react';
+
+// ** Utils Imports
 import {getHoursAndMinutesFormated, getHoursState} from '../../utils/date';
 
 interface TaskItemProps {

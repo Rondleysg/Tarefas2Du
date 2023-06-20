@@ -1,8 +1,17 @@
+// ** React Imports
 import React from 'react';
 import {Text, View, Image} from 'react-native';
+
+// ** Hooks Imports
 import useUser from '../../hooks/useUser';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Components Imports
 import {Button} from 'react-native-paper';
+
+// ** Services Imports
 import {auth} from '../../libs/firebase/config';
 import RNRestart from 'react-native-restart';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,11 +22,17 @@ interface ProfileProps {}
 
 export default function Profile({}: ProfileProps) {
   const {user} = useUser();
+
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      RNRestart.restart();
+    });
+  };
+
   if (!user) {
     RNRestart.restart();
     return <></>;
   }
-
   return (
     <View style={styles.containerMain}>
       <Text style={styles.title}>Seu Perfil</Text>
@@ -58,12 +73,7 @@ export default function Profile({}: ProfileProps) {
         </View>
         <View style={styles.containerButtons}>
           <Line style={styles.line} />
-          <Button
-            onPress={() => {
-              auth.signOut().then(() => {
-                RNRestart.restart();
-              });
-            }}>
+          <Button onPress={handleLogout}>
             <Text style={styles.btnText}>Sair</Text>
           </Button>
           <Line style={styles.line} />
@@ -72,3 +82,5 @@ export default function Profile({}: ProfileProps) {
     </View>
   );
 }
+
+// ! Note: This screen is not finished yet.

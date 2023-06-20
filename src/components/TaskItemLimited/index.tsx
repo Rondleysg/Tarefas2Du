@@ -1,8 +1,17 @@
+// ** React Imports
 import React from 'react';
 import {Text, TouchableOpacity, View, useWindowDimensions} from 'react-native';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Icons Imports
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// ** Types Imports
 import {Task} from '../../types/task';
+
+// ** Utils Imports
 import {getHoursAndMinutesFormated} from '../../utils/date';
 
 interface TaskItemLimitedProps {

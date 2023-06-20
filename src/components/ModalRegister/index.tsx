@@ -1,3 +1,4 @@
+// ** React Imports
 import React, {useEffect, useRef, useState} from 'react';
 import {
   TextInput,
@@ -7,17 +8,34 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+
+// ** Modal Imports
 import ActionSheet, {
   ActionSheetRef,
   SheetProps,
 } from 'react-native-actions-sheet';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Libs Imports
 import DatePicker from 'react-native-date-picker';
+
+// ** Utils Imports
 import {getFullDateNormalized} from '../../utils/date';
+
+// ** Icons Imports
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// ** Hooks Imports
 import useUser from '../../hooks/useUser';
 import useTasks from '../../hooks/useTasks';
-import {db} from '../../libs/firebase/config';
+
+// ** Services Imports
+import {TaskService} from '../../services/TaskService';
+
+// ** Types Imports
+import {Task} from '../../types/task';
 
 function ModalRegister({sheetId}: SheetProps<{data: string}>) {
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -27,42 +45,46 @@ function ModalRegister({sheetId}: SheetProps<{data: string}>) {
   const [open, setOpen] = useState(false);
   const {user} = useUser();
   const {setTasks} = useTasks();
-  const tasksRef = db.collection('tasks');
 
   useEffect(() => {
     setFullDateNormalized(getFullDateNormalized(dateTask));
   }, [dateTask]);
 
-  const onAddButtonPress = () => {
+  function clearFields() {
+    Keyboard.dismiss();
+    setDescriptionTask('');
+    setDateTask(new Date());
+  }
+
+  const onAddButtonPress = async () => {
     if (!user) {
       return;
     }
     if (descriptionTask && descriptionTask.length > 0) {
-      const task = {
-        description: descriptionTask,
-        userId: user.id,
-        createdAt: new Date(),
-        completed: false,
-        completeDate: dateTask.getTime(),
-        day: dateTask.getDate(),
-        month: dateTask.getMonth(),
-        year: dateTask.getFullYear(),
-        hours: dateTask.getHours(),
-        minutes: dateTask.getMinutes(),
-      };
-      tasksRef
-        .add(task)
-        .then(doc => {
-          setDescriptionTask('');
-          setDateTask(new Date());
-          Keyboard.dismiss();
-          const taskData = {...task, id: doc.id};
+      try {
+        const task: Task = {
+          id: '',
+          description: descriptionTask,
+          userId: user.id,
+          createdAt: new Date(),
+          completed: false,
+          completeDate: dateTask.getTime(),
+          day: dateTask.getDate(),
+          month: dateTask.getMonth(),
+          year: dateTask.getFullYear(),
+          hours: dateTask.getHours(),
+          minutes: dateTask.getMinutes(),
+        };
+        const res = await TaskService.addTask(task);
+        if (res) {
+          clearFields();
+          const taskData = {...task, id: res.id};
           setTasks(prevState => [...prevState, taskData]);
           actionSheetRef.current?.hide();
-        })
-        .catch(error => {
-          Alert.alert(error);
-        });
+        }
+      } catch (error: any) {
+        Alert.alert(error);
+      }
     }
   };
 

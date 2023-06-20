@@ -1,14 +1,27 @@
+// ** React Imports
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 
+// ** Navigate Imports
+import {NavigationContainer} from '@react-navigation/native';
 import {RootStack} from './Routes';
+
+// ** Modal Imports
 import {SheetProvider} from 'react-native-actions-sheet';
 import './libs/sheets';
-import {User} from './types/user';
-import {auth, db} from './libs/firebase/config';
+
+// ** Context Imports
 import UserContext from './context/User';
-import {Task} from './types/task';
 import TaskContext from './context/Tasks';
+
+// ** Services Imports
+import {TaskService} from './services/TaskService';
+
+// ** Types Imports
+import {User} from './types/user';
+import {Task} from './types/task';
+
+// ** Firebase Imports
+import {auth, db} from './libs/firebase/config';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -16,17 +29,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const getTasks = async (userId: string) => {
-    const tasksRef = db.collection('tasks');
-    const doc = await tasksRef
-      .where('userId', '==', userId)
-      .orderBy('completeDate', 'desc')
-      .get();
-    const tasksAux: Task[] = [];
-    doc.forEach(task => {
-      const taskData = task.data() as Task;
-      taskData.id = task.id;
-      tasksAux.push(taskData);
-    });
+    const tasksAux = await TaskService.getTasksByUserId(userId);
     setTasks(tasksAux);
   };
 

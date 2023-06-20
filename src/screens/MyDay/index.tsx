@@ -1,64 +1,65 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, {useEffect, useState} from 'react';
+// ** React Imports
+import React, {useCallback, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+
+// ** Hooks Imports
 import useUser from '../../hooks/useUser';
 import useTasks from '../../hooks/useTasks';
+
+// ** Styles Imports
 import styles from './styles';
-import {FlatList} from 'react-native-gesture-handler';
+
+// ** Utils Imports
 import {getCurrentDayText} from '../../utils/date';
+
+// ** Components Imports
 import TaskItem from '../../components/TaskItem';
 import FabButton from '../../components/FabButton';
-import {Task} from '../../types/task';
-import {SheetManager} from 'react-native-actions-sheet';
-import {db} from '../../libs/firebase/config';
 import {Line} from '../../components/Line';
+
+// ** Modal Imports
+import {SheetManager} from 'react-native-actions-sheet';
+
+// ** Types Imports
+import {Task} from '../../types/task';
+
+// ** Services Imports
+import {TaskService} from '../../services/TaskService';
+
+// ** Libs Imports
 import RNRestart from 'react-native-restart';
 
-interface MyDayProps {}
-
-export default function MyDay({}: MyDayProps) {
+export default function MyDay() {
   const {user} = useUser();
   const [day, _setDay] = useState(getCurrentDayText());
   const {tasks, setTasks} = useTasks();
   const [tasksToday, setTasksToday] = useState<Task[]>([]);
 
+  const handleCheckTask = async (task: Task) => {
+    TaskService.markTaskAsCompleted(task);
+    const tasksAux = tasks.map(taskAux => {
+      if (taskAux.id === task.id) {
+        taskAux.completed = !taskAux.completed;
+      }
+      return taskAux;
+    });
+    setTasks(tasksAux);
+  };
+
+  const getTasksToday = useCallback(async () => {
+    const tasksTodayAux = await TaskService.getTasksToday(tasks);
+    setTasksToday(tasksTodayAux);
+  }, [tasks]);
+
+  useEffect(() => {
+    getTasksToday();
+  }, [getTasksToday]);
+
   if (!user) {
     RNRestart.restart();
     return <></>;
   }
-
-  const handleCheckTask = async (task: Task) => {
-    const tasksRef = db.collection('tasks');
-    tasksRef
-      .doc(task.id)
-      .update({
-        completed: !task.completed,
-      })
-      .then(() => {
-        const tasksAux = tasks.map(taskAux => {
-          if (taskAux.id === task.id) {
-            taskAux.completed = !taskAux.completed;
-          }
-          return taskAux;
-        });
-        setTasks(tasksAux);
-      });
-  };
-
-  useEffect(() => {
-    const getTasksToday = () => {
-      const tasksTodayAux = tasks.filter(task => {
-        const date = new Date();
-        return (
-          task.day === date.getDate() &&
-          task.month === date.getMonth() &&
-          task.year === date.getFullYear()
-        );
-      });
-      setTasksToday(tasksTodayAux);
-    };
-    getTasksToday();
-  }, [tasks]);
 
   return (
     <View style={styles.containerMain}>

@@ -1,6 +1,11 @@
+// ** React Imports
 import React from 'react';
 import {Text, View} from 'react-native';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Components Imports
 import {Line} from '../../components/Line';
 
 interface CardStatisticsProps {

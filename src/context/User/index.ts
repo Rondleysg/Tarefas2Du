@@ -1,4 +1,7 @@
+// ** React Imports
 import React from 'react';
+
+// ** Types Imports
 import {User} from '../../types/user';
 
 type UserContextType = {

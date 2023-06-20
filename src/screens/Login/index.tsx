@@ -1,3 +1,4 @@
+// ** React Imports
 import React, {useState} from 'react';
 import {
   Image,
@@ -8,12 +9,21 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+// ** Styles Imports
 import styles from './styles';
+
+// ** Navigate Imports
 import {NavigationProp} from '@react-navigation/native';
-import {auth, db} from '../../libs/firebase/config';
-import {User} from '../../types/user';
-import useUser from '../../hooks/useUser';
+
+// ** Components Imports
 import TextInputComponent from '../../components/TextInput';
+
+// ** Hooks Imports
+import useUser from '../../hooks/useUser';
+
+// ** Services Imports
+import {UserService} from '../../services/UserService';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -31,44 +41,26 @@ export function Login({navigation}: LoginProps) {
     setFieldPassword('');
   }
 
-  function userLogin() {
+  const userLogin = async () => {
     if (fieldEmail === '' || fieldPassword === '') {
       Alert.alert('Atenção', 'Todos os campos são obrigatórios.');
     } else {
       setIsLoading(true);
-      auth
-        .signInWithEmailAndPassword(fieldEmail, fieldPassword)
-        .then(res => {
-          const uid = res.user.uid;
-          const usersRef = db.collection('users');
-          usersRef
-            .doc(uid)
-            .get()
-            .then(firestoreDocument => {
-              if (!firestoreDocument.exists) {
-                Alert.alert('Usuário não existe.');
-                return;
-              }
-              const user: User = firestoreDocument.data() as User;
-              setUser(user);
-              clearFields();
-              setIsLoading(false);
-              navigation.navigate('Home');
-            })
-            .catch(error => {
-              Alert.alert(error);
-            });
-        })
-        .catch(error => {
-          setIsLoading(false);
-          Alert.alert(
-            'Atenção',
-            'Dados incorretos, por favor tente novamente com outros dados.',
-          );
-          console.log('login error --->', error);
-        });
+      const res = await UserService.getUserByEmailAndPassword(
+        fieldEmail,
+        fieldPassword,
+      );
+      if (typeof res === 'string') {
+        setIsLoading(false);
+        Alert.alert('Atenção', res);
+        return;
+      }
+      setUser(res);
+      clearFields();
+      setIsLoading(false);
+      navigation.navigate('Home');
     }
-  }
+  };
 
   if (isLoading) {
     if (isLoading) {
