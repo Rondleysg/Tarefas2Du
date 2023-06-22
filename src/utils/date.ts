@@ -64,11 +64,20 @@ export const getFullDateNormalized = (date: Date) => {
   return date.toLocaleDateString() + ' ' + hours + ':' + minutes; // *format: dd/mm/yy hh:mm;
 };
 
-export const getWeekNumber = (date: Date) => {
-  const year = new Date(date.getFullYear(), 0, 1);
-  const days = Math.floor(
-    (date.getTime() - year.getTime()) / (24 * 60 * 60 * 1000),
+export const isNextWeek = (date: Date): boolean => {
+  const today = new Date();
+  const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+  const nextWeekStart = new Date(
+    nextWeek.getFullYear(),
+    nextWeek.getMonth(),
+    nextWeek.getDate() - (nextWeek.getDay() + 1),
   );
-  const week = Math.ceil((date.getDay() + 1 + days) / 7);
-  return week;
+  const nextWeekEnd = new Date(
+    nextWeekStart.getFullYear(),
+    nextWeekStart.getMonth(),
+    nextWeekStart.getDate() + 7,
+  );
+
+  return date >= nextWeekStart && date <= nextWeekEnd;
 };

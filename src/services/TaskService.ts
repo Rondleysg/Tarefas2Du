@@ -5,7 +5,7 @@ import {db} from '../libs/firebase/config';
 import {Task} from '../types/task';
 
 // ** Utils Imports
-import {getWeekNumber} from '../utils/date';
+import {isNextWeek} from '../utils/date';
 
 const dateToday = new Date();
 const tasksRef = db.collection('tasks');
@@ -56,10 +56,8 @@ export const TaskService = {
   },
 
   async getTasksNextWeek(tasks: Task[]): Promise<Task[]> {
-    const currentWeek = getWeekNumber(dateToday);
     const tasksNextWeekAux = tasks.filter(task => {
-      const taskWeek = getWeekNumber(new Date(task.completeDate * 1000));
-      if (taskWeek === currentWeek + 1) {
+      if (isNextWeek(new Date(task.completeDate))) {
         return task;
       }
     });
