@@ -50,11 +50,6 @@ export default StyleSheet.create({
     width: '100%',
     height: '65%',
   },
-  flexField: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 40,
-  },
   name: {
     fontSize: 20,
     fontWeight: 'bold',

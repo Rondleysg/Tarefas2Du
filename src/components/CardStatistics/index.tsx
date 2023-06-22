@@ -10,7 +10,7 @@ import {Line} from '../../components/Line';
 
 interface CardStatisticsProps {
   text: string;
-  value: string;
+  value: number;
 }
 
 export default function CardStatistics({text, value}: CardStatisticsProps) {

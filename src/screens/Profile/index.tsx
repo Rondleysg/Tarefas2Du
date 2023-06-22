@@ -1,9 +1,10 @@
 // ** React Imports
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, Image} from 'react-native';
 
 // ** Hooks Imports
 import useUser from '../../hooks/useUser';
+import useTasks from '../../hooks/useTasks';
 
 // ** Styles Imports
 import styles from './styles';
@@ -12,21 +13,43 @@ import styles from './styles';
 import {Button} from 'react-native-paper';
 
 // ** Services Imports
-import {auth} from '../../libs/firebase/config';
 import RNRestart from 'react-native-restart';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Line} from '../../components/Line';
 import CardStatistics from '../../components/CardStatistics';
+import {UserService} from '../../services/UserService';
+import {ItemEditable} from '../../components/ItemEditable';
 
 interface ProfileProps {}
 
 export default function Profile({}: ProfileProps) {
-  const {user} = useUser();
+  const {user, setUser} = useUser();
+  const {tasks} = useTasks();
+  const [userName, setUserName] = useState(user ? user.name : '');
+  const [userEmail, setUserEmail] = useState(user ? user.email : '');
+  const qntTasksCreated = tasks.length;
+  const qntTasksCompleted = tasks.filter(task => task.completed).length;
+  const qntTasksPending = qntTasksCreated - qntTasksCompleted;
 
   const handleLogout = () => {
-    auth.signOut().then(() => {
+    UserService.disconnectUser().then(() => {
       RNRestart.restart();
     });
+  };
+
+  const handleEditingName = (text: string) => {
+    if (!user) {
+      return;
+    }
+    UserService.updateUserName(user, text);
+    setUser({...user, name: text});
+  };
+
+  const handleEditingEmail = (text: string) => {
+    if (!user) {
+      return;
+    }
+    UserService.updateUserEmail(user, text);
+    setUser({...user, email: text});
   };
 
   if (!user) {
@@ -44,31 +67,34 @@ export default function Profile({}: ProfileProps) {
           </Button>
         </View>
         <View style={styles.containerFields}>
-          <View style={styles.flexField}>
-            <Text style={styles.name}>{user.name}</Text>
-            <MaterialCommunityIcons
-              disabled
-              name={'pencil'}
-              color="#a9a9a9"
-              size={24}
-            />
-          </View>
-          <View style={styles.flexField}>
-            <Text style={styles.email}>{user.email}</Text>
-            <MaterialCommunityIcons
-              disabled
-              name={'pencil'}
-              color="#a9a9a9"
-              size={24}
-            />
-          </View>
+          <ItemEditable
+            text={user.name}
+            style={styles.name}
+            onChangeText={text => setUserName(text)}
+            onEdit={() => handleEditingName(userName)}
+          />
+          <ItemEditable
+            text={user.email}
+            style={styles.email}
+            onChangeText={text => setUserEmail(text)}
+            onEdit={() => handleEditingEmail(userEmail)}
+          />
         </View>
       </View>
       <View style={styles.containersContent}>
         <View style={styles.containerStatistics}>
-          <CardStatistics text="Quantidade de Tarefas Criadas:" value="0" />
-          <CardStatistics text="Quantidade de Tarefas Finalizadas:" value="0" />
-          <CardStatistics text="Quantidade de Tarefas Pendentes:" value="0" />
+          <CardStatistics
+            text="Quantidade de Tarefas Criadas:"
+            value={qntTasksCreated}
+          />
+          <CardStatistics
+            text="Quantidade de Tarefas Finalizadas:"
+            value={qntTasksCompleted}
+          />
+          <CardStatistics
+            text="Quantidade de Tarefas Pendentes:"
+            value={qntTasksPending}
+          />
           <Line style={styles.line} />
         </View>
         <View style={styles.containerButtons}>

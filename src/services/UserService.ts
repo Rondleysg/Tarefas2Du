@@ -4,9 +4,10 @@ import {auth, db} from '../libs/firebase/config';
 // ** Types Imports
 import {User} from '../types/user';
 
+const usersRef = db.collection('users');
+
 export const UserService = {
   async getUserById(userId: string) {
-    const usersRef = db.collection('users');
     const doc = await usersRef.doc(userId).get();
     const user = doc.data() as User;
     return user;
@@ -19,7 +20,6 @@ export const UserService = {
     try {
       const response = await auth.signInWithEmailAndPassword(email, password);
       const uid = response.user.uid;
-      const usersRef = db.collection('users');
       const doc = await usersRef.doc(uid).get();
       if (!doc.exists) {
         return 'Usuário não existe.';
@@ -49,7 +49,6 @@ export const UserService = {
         photoUrl:
           'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-Pic.png',
       };
-      const usersRef = db.collection('users');
       await usersRef.doc(uid).set(user);
       return user;
     } catch (error: any) {
@@ -67,5 +66,37 @@ export const UserService = {
 
       return 'Um erro não mapeado aconteceu, verifique sua conexão com a internet ou altere seus dados de cadastro.';
     }
+  },
+
+  async updateUser(user: User) {
+    await usersRef.doc(user.id).update(user);
+  },
+
+  async updateUserName(user: User, name: string) {
+    if (!user || !name) {
+      return;
+    }
+    await usersRef.doc(user.id).update({name: name});
+  },
+
+  // TODO: This method is to implemented.
+  async updateUserPhotoUrl(userId: string, photoUrl: string) {
+    return [userId, photoUrl];
+  },
+
+  // TODO: This method is to implemented.
+  async updateUserPassword(userId: string, password: string) {
+    return [userId, password];
+  },
+
+  async updateUserEmail(user: User, email: string) {
+    if (!user || !email) {
+      return;
+    }
+    await usersRef.doc(user.id).update({email: email});
+  },
+
+  async disconnectUser() {
+    return auth.signOut();
   },
 };
