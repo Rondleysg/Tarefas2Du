@@ -1,8 +1,6 @@
 {
     "version": "0.2",
     "ignorePaths": [],
-    "dictionaryDefinitions": [],
-    "dictionaries": [],
     "words": [
         "abril",
         "agosto",
@@ -13,6 +11,7 @@
         "junho",
         "Maio",
         "março",
+        "notifee",
         "novembro",
         "outubro",
         "quarta",

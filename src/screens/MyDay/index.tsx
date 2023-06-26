@@ -33,19 +33,8 @@ import RNRestart from 'react-native-restart';
 export default function MyDay() {
   const {user} = useUser();
   const [day, _setDay] = useState(getCurrentDayText());
-  const {tasks, setTasks} = useTasks();
+  const {tasks} = useTasks();
   const [tasksToday, setTasksToday] = useState<Task[]>([]);
-
-  const handleCheckTask = async (task: Task) => {
-    TaskService.markTaskAsCompleted(task);
-    const tasksAux = tasks.map(taskAux => {
-      if (taskAux.id === task.id) {
-        taskAux.completed = !taskAux.completed;
-      }
-      return taskAux;
-    });
-    setTasks(tasksAux);
-  };
 
   const getTasksToday = useCallback(async () => {
     const tasksTodayAux = await TaskService.getTasksToday(tasks);
@@ -84,7 +73,7 @@ export default function MyDay() {
           renderItem={({item}) => (
             <View style={styles.task}>
               <Line style={styles.line} />
-              <TaskItem taskItem={item} onPress={() => handleCheckTask(item)} />
+              <TaskItem taskItem={item} />
             </View>
           )}
         />
