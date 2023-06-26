@@ -1,8 +1,12 @@
-import React from 'react';
+// ** React Imports
+import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// ** Styles Imports
 import styles from './styles';
-import {useState} from 'react';
+
+// ** Icons Imports
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface ItemEditableProps {
   text: string;
