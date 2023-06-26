@@ -118,7 +118,7 @@ function ModalRegister({sheetId}: SheetProps<{data: string}>) {
           </TouchableOpacity>
           <TouchableOpacity onPress={onAddButtonPress}>
             <MaterialCommunityIcons
-              name="send-check"
+              name="send"
               color="#a9a9a9"
               size={32}
               style={styles.btnConfirm}
