@@ -17,16 +17,20 @@ import {getHoursAndMinutesFormated} from '../../utils/date';
 interface TaskItemLimitedProps {
   onPress: () => void;
   taskItem: Task;
+  visible: boolean;
 }
 
 export default function TaskItemLimited({
   onPress,
   taskItem,
+  visible,
 }: TaskItemLimitedProps) {
   const window = useWindowDimensions();
+  const visibility = visible ? 'flex' : 'none';
 
   return (
-    <View style={[styles.container, {width: window.width}]}>
+    <View
+      style={[styles.container, {width: window.width, display: visibility}]}>
       <View style={styles.containerTask}>
         <TouchableOpacity
           activeOpacity={0.7}

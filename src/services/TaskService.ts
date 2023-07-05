@@ -73,6 +73,17 @@ export const TaskService = {
     return tasksSomedayAux;
   },
 
+  async getTasksPending(tasks: Task[]): Promise<Task[]> {
+    const tasksPendingAux = tasks.filter(task => {
+      const dateTask = new Date(task.completeDate);
+      const now = new Date();
+      if (task.completed === false && dateTask < now) {
+        return task;
+      }
+    });
+    return tasksPendingAux;
+  },
+
   async addTask(task: Task) {
     try {
       const res = await tasksRef.add(task);
