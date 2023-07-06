@@ -206,21 +206,22 @@ export default function MyTasks() {
                   <Text style={[styles.subTitle, styles.quantityTasks]}>
                     {sectionTasks.length} Tarefas
                   </Text>
-                  {sectionIsOpen ? (
-                    <MaterialCommunityIcons
-                      name={'arrow-up-drop-circle-outline'}
-                      color="#4AC356"
-                      size={24}
-                      onPress={() => handleOpenSection(section.id)}
-                    />
-                  ) : (
-                    <MaterialCommunityIcons
-                      name={'arrow-down-drop-circle-outline'}
-                      color="#4AC356"
-                      size={24}
-                      onPress={() => handleOpenSection(section.id)}
-                    />
-                  )}
+                  {sectionTasks.length > 0 &&
+                    (sectionIsOpen ? (
+                      <MaterialCommunityIcons
+                        name={'arrow-up-drop-circle-outline'}
+                        color="#4AC356"
+                        size={24}
+                        onPress={() => handleOpenSection(section.id)}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name={'arrow-down-drop-circle-outline'}
+                        color="#4AC356"
+                        size={24}
+                        onPress={() => handleOpenSection(section.id)}
+                      />
+                    ))}
                 </View>
               </View>
             );
