@@ -25,6 +25,9 @@ import useUser from '../../hooks/useUser';
 // ** Services Imports
 import {UserService} from '../../services/UserService';
 
+// ** Libs Imports
+import notifee from '@notifee/react-native';
+
 interface LoginProps {
   navigation: NavigationProp<any, any>;
 }
@@ -40,6 +43,10 @@ export function Login({navigation}: LoginProps) {
     setFieldEmail('');
     setFieldPassword('');
   }
+
+  const requestNotificationPerm = async () => {
+    await notifee.requestPermission();
+  };
 
   const userLogin = async () => {
     if (fieldEmail === '' || fieldPassword === '') {
@@ -59,6 +66,7 @@ export function Login({navigation}: LoginProps) {
       clearFields();
       setIsLoading(false);
       navigation.navigate('Home');
+      requestNotificationPerm();
     }
   };
 

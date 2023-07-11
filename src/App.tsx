@@ -23,6 +23,9 @@ import {Task} from './types/task';
 // ** Firebase Imports
 import {auth, db} from './libs/firebase/config';
 
+// ** Libs Imports
+import notifee from '@notifee/react-native';
+
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,6 +34,10 @@ export default function App() {
   const getTasks = async (userId: string) => {
     const tasksAux = await TaskService.getTasksByUserId(userId);
     setTasks(tasksAux);
+  };
+
+  const requestNotificationPerm = async () => {
+    await notifee.requestPermission();
   };
 
   useEffect(() => {
@@ -58,6 +65,7 @@ export default function App() {
     });
     if (user) {
       getTasks(user.id);
+      requestNotificationPerm();
     }
   }, [user]);
 

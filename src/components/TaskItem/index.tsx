@@ -99,7 +99,7 @@ export default function TaskItem({taskItem}: TaskItemProps) {
 
   useEffect(() => {
     async function handleSendNotification() {
-      const date = new Date(Date.now());
+      const date = new Date();
       date.setHours(taskItem.hours);
       date.setMinutes(taskItem.minutes);
       const now = new Date();
@@ -162,9 +162,9 @@ export default function TaskItem({taskItem}: TaskItemProps) {
 
     if (date < now || taskItem.completed) {
       return;
+    } else {
+      handleSendNotification();
     }
-
-    handleSendNotification();
   }, [taskItem]);
 
   return (

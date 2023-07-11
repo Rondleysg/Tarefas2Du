@@ -5,7 +5,7 @@ import {db} from '../libs/firebase/config';
 import {Task} from '../types/task';
 
 // ** Utils Imports
-import {isNextWeek} from '../utils/date';
+import {isNextWeek, isPast} from '../utils/date';
 
 const dateToday = new Date();
 const tasksRef = db.collection('tasks');
@@ -31,7 +31,7 @@ export const TaskService = {
     });
   },
 
-  async getTasksToday(tasks: Task[]): Promise<Task[]> {
+  getTasksToday(tasks: Task[]): Task[] {
     const tasksTodayAux = tasks.filter(task => {
       const date = new Date();
       return (
@@ -43,7 +43,7 @@ export const TaskService = {
     return tasksTodayAux;
   },
 
-  async getTasksTomorrow(tasks: Task[]): Promise<Task[]> {
+  getTasksTomorrow(tasks: Task[]): Task[] {
     const tasksTomorrowAux = tasks.filter(task => {
       const date = new Date();
       return (
@@ -55,7 +55,7 @@ export const TaskService = {
     return tasksTomorrowAux;
   },
 
-  async getTasksNextWeek(tasks: Task[]): Promise<Task[]> {
+  getTasksNextWeek(tasks: Task[]): Task[] {
     const tasksNextWeekAux = tasks.filter(task => {
       if (isNextWeek(new Date(task.completeDate))) {
         return task;
@@ -64,7 +64,7 @@ export const TaskService = {
     return tasksNextWeekAux;
   },
 
-  async getTasksSomeday(tasks: Task[]): Promise<Task[]> {
+  getTasksSomeday(tasks: Task[]): Task[] {
     const tasksSomedayAux = tasks.filter(
       task =>
         task.month >= dateToday.getMonth() + 1 &&
@@ -73,11 +73,10 @@ export const TaskService = {
     return tasksSomedayAux;
   },
 
-  async getTasksPending(tasks: Task[]): Promise<Task[]> {
+  getTasksPending(tasks: Task[]): Task[] {
     const tasksPendingAux = tasks.filter(task => {
       const dateTask = new Date(task.completeDate);
-      const now = new Date();
-      if (task.completed === false && dateTask < now) {
+      if (task.completed === false && isPast(dateTask)) {
         return task;
       }
     });

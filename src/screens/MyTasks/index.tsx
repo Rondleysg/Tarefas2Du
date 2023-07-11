@@ -43,27 +43,27 @@ export default function MyTasks() {
   };
 
   const getTasksToday = useCallback(async () => {
-    const tasksTodayAux = await TaskService.getTasksToday(tasks);
+    const tasksTodayAux = TaskService.getTasksToday(tasks);
     setTasksToday(tasksTodayAux);
   }, [tasks]);
 
   const getTasksTomorrow = useCallback(async () => {
-    const tasksTomorrowAux = await TaskService.getTasksTomorrow(tasks);
+    const tasksTomorrowAux = TaskService.getTasksTomorrow(tasks);
     setTasksTomorrow(tasksTomorrowAux);
   }, [tasks]);
 
   const getTasksNextWeek = useCallback(async () => {
-    const tasksNextWeekAux = await TaskService.getTasksNextWeek(tasks);
+    const tasksNextWeekAux = TaskService.getTasksNextWeek(tasks);
     setTasksNextWeek(tasksNextWeekAux);
   }, [tasks]);
 
   const getTasksSomeday = useCallback(async () => {
-    const tasksSomedayAux = await TaskService.getTasksSomeday(tasks);
+    const tasksSomedayAux = TaskService.getTasksSomeday(tasks);
     setTasksSomeday(tasksSomedayAux);
   }, [tasks]);
 
   const getTasksPending = useCallback(async () => {
-    const tasksPendingAux = await TaskService.getTasksPending(tasks);
+    const tasksPendingAux = TaskService.getTasksPending(tasks);
     setTasksPending(tasksPendingAux);
   }, [tasks]);
 

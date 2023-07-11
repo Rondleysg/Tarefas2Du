@@ -81,3 +81,14 @@ export const isNextWeek = (date: Date): boolean => {
 
   return date >= nextWeekStart && date <= nextWeekEnd;
 };
+
+export const isPast = (date: Date): boolean => {
+  const now = new Date();
+  const dateNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dateToCompare = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  return dateToCompare < dateNow;
+};

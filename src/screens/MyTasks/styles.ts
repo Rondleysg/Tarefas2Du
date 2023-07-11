@@ -47,6 +47,7 @@ export default StyleSheet.create({
   containerQuantityTasks: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 10,
   },
   quantityTasks: {
     marginRight: 10,
