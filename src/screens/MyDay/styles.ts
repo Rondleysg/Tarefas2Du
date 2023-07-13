@@ -46,4 +46,20 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     color: '#4AC356',
   },
+  containerNoTasks: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 100,
+  },
+  noTasksTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#537A57',
+  },
+  noTasksSubTitle: {
+    fontSize: 22,
+    marginTop: 5,
+  },
 });

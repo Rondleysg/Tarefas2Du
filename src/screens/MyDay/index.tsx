@@ -58,25 +58,32 @@ export default function MyDay() {
         <Text style={styles.quantityTasks}>
           Você tem {tasksToday.length} tarefas
         </Text>
-        <FlatList
-          data={tasksToday.sort((a, b) => {
-            if (a.completeDate && b.completeDate) {
-              if (a.completeDate === b.completeDate) {
-                return 0;
+        {tasksToday.length > 0 ? (
+          <FlatList
+            data={tasksToday.sort((a, b) => {
+              if (a.completeDate && b.completeDate) {
+                if (a.completeDate === b.completeDate) {
+                  return 0;
+                }
+                return a.completeDate < b.completeDate ? 1 : -1;
               }
-              return a.completeDate < b.completeDate ? 1 : -1;
-            }
-            return 0;
-          })}
-          style={styles.list}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <View style={styles.task}>
-              <Line style={styles.line} />
-              <TaskItem taskItem={item} />
-            </View>
-          )}
-        />
+              return 0;
+            })}
+            style={styles.list}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <View style={styles.task}>
+                <Line style={styles.line} />
+                <TaskItem taskItem={item} />
+              </View>
+            )}
+          />
+        ) : (
+          <View style={styles.containerNoTasks}>
+            <Text style={styles.noTasksTitle}>Olá, {user.name}</Text>
+            <Text style={styles.noTasksSubTitle}>O que deseja fazer hoje?</Text>
+          </View>
+        )}
       </View>
       <FabButton
         onClick={() => {
